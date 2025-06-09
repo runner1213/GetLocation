@@ -23,7 +23,7 @@ public class UI {
     public static void createComponents() {
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
-        frame.setSize(600, 300);
+        frame.setSize(600, 400);
 
         JPanel inputPanel = new JPanel(new FlowLayout());
         inputPanel.add(enterIpLabel);

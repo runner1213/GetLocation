@@ -12,7 +12,6 @@ public class GetIP {
         String displayAddress;
 
         switch (address) {
-            case "172.67.70.231" -> displayAddress = address + " (Сервер CloudFlare)";
             case "8.8.8.8"       -> displayAddress = address + " (Google DNS)";
             case "1.1.1.1"       -> displayAddress = address + " (Cloudflare DNS)";
             default -> displayAddress = address;
