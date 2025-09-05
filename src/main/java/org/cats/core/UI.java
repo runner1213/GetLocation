@@ -18,7 +18,8 @@ public class UI {
     protected static JLabel ip = new JLabel("Айпи: ");
     protected static JLabel location = new JLabel("Локация: ");
     protected static JButton getBtn = new JButton("Получить айпи");
-    protected static JButton copyBtn = new JButton("Копировать айпи");
+    protected static JButton copyIPBtn = new JButton("Копировать айпи");
+    protected static JButton copyLocBtn = new JButton("Копировать локацию");
 
     public static void createComponents() {
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -36,6 +37,8 @@ public class UI {
             if (selected != null && !selected.isEmpty()) {
                 if (!selected.equals(domainList.getItemAt(0))) {
                     ipField.setText(selected);
+                    ipField.requestFocusInWindow();
+                    ipField.setCaretPosition(0);
                 } else {
                   ipField.setText("");
                 }
@@ -46,16 +49,22 @@ public class UI {
         resultPanel.setLayout(new BoxLayout(resultPanel, BoxLayout.Y_AXIS));
         resultPanel.add(ip);
         resultPanel.add(location);
-        resultPanel.add(copyBtn);
+        resultPanel.add(copyIPBtn);
+        resultPanel.add(copyLocBtn);
 
         getBtn.addActionListener(e -> GetIP.getIP());
-        copyBtn.addActionListener(f -> {
+        copyIPBtn.addActionListener(f -> {
             GetIP.getIP();
 
             String ipaddress = getAddress().getHostAddress();
             StringSelection selection = new StringSelection(ipaddress);
             Toolkit.getDefaultToolkit().getSystemClipboard().setContents(selection, null);
             JOptionPane.showMessageDialog(frame, "IP ("+ ipaddress +") скопирован в буфер обмена!");
+        });
+
+        copyLocBtn.addActionListener(e -> {
+            String locationGet = GetLocation.getLocation();
+            JOptionPane.showMessageDialog(frame, "Локация ("+ locationGet +") скопирован в буфер обмена!");
         });
 
         frame.add(inputPanel, BorderLayout.NORTH);

@@ -13,7 +13,7 @@ public class GetIP {
 
         switch (address) {
             case "8.8.8.8"       -> displayAddress = address + " (Google DNS)";
-            case "1.1.1.1"       -> displayAddress = address + " (Cloudflare DNS)";
+            case "1.1.1.1" -> displayAddress = address + " (Cloudflare DNS)";
             default -> displayAddress = address;
         }
 
