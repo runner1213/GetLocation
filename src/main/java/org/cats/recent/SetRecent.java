@@ -1,9 +1,11 @@
 package org.cats.recent;
 
-import static org.cats.core.UI.domainList;
+import org.cats.core.UI;
+
+import javax.swing.*;
 
 public class SetRecent {
-    public static void setRecent(String domain) {
+    public static void setRecent(String domain, JComboBox<String> domainList) {
         String subdomain = rmSubdomain(domain);
         if (subdomain != null && !subdomain.trim().isEmpty()) {
             for (int i = 0; i < domainList.getItemCount(); i++) {

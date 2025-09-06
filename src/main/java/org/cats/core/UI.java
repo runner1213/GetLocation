@@ -8,20 +8,23 @@ import javax.swing.*;
 import java.awt.*;
 
 public class UI {
-    public static String[] recentDomains = GetRecent.getRecent();
-    public static JFrame frame = new JFrame("Локация");
+    private final String[] recentDomains = GetRecent.getRecent();
+    private final JFrame frame = new JFrame("Локация");
 
-    public static JComboBox<String> domainList = new JComboBox<>(recentDomains);
+    private final JComboBox<String> domainList = new JComboBox<>(recentDomains);
 
-    protected static JLabel enterIpLabel = new JLabel("Введите айпи или домен:");
-    protected static JTextField ipField = new JTextField(20);
-    protected static JLabel ip = new JLabel("Айпи: ");
-    protected static JLabel location = new JLabel("Локация: ");
-    protected static JButton getBtn = new JButton("Получить айпи");
-    protected static JButton copyIPBtn = new JButton("Копировать айпи");
-    protected static JButton copyLocBtn = new JButton("Копировать локацию");
+    protected JLabel enterIpLabel = new JLabel("Введите айпи или домен:");
+    protected JTextField ipField = new JTextField(20);
+    protected JLabel ip = new JLabel("Айпи: ");
+    protected JLabel location = new JLabel("Локация: ");
+    protected JButton getBtn = new JButton("Получить айпи");
+    protected JButton copyIPBtn = new JButton("Копировать айпи");
+    protected JButton copyLocBtn = new JButton("Копировать локацию");
 
-    public static void createComponents() {
+    private final GetLocation getLocation = new GetLocation();
+    private final GetIP getIP = new GetIP();
+
+    public void createComponents() {
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
         frame.setSize(600, 400);
@@ -52,9 +55,9 @@ public class UI {
         resultPanel.add(copyIPBtn);
         resultPanel.add(copyLocBtn);
 
-        getBtn.addActionListener(e -> GetIP.getIP());
+        getBtn.addActionListener(e -> getIP.getIP(ipField, ip, location, this, getLocation, frame, domainList));
         copyIPBtn.addActionListener(f -> {
-            GetIP.getIP();
+            getIP.getIP(ipField, ip, location, this, getLocation, frame, domainList);
 
             String ipaddress = getAddress().getHostAddress();
             StringSelection selection = new StringSelection(ipaddress);
@@ -63,8 +66,8 @@ public class UI {
         });
 
         copyLocBtn.addActionListener(e -> {
-            String locationGet = GetLocation.getLocation();
-            JOptionPane.showMessageDialog(frame, "Локация ("+ locationGet +") скопирован в буфер обмена!");
+            String locationGet = getLocation.getLocation(frame, ipField, ip, this);
+            JOptionPane.showMessageDialog(frame, "Локация ("+ locationGet +") скопирована в буфер обмена!");
         });
 
         frame.add(inputPanel, BorderLayout.NORTH);
@@ -72,7 +75,7 @@ public class UI {
 
         frame.setVisible(true);
     }
-    public static InetAddress getAddress() {
+    public InetAddress getAddress() {
         InetAddress address = null;
         String ipText;
         try {

@@ -4,11 +4,10 @@ import org.cats.recent.SetRecent;
 
 import javax.swing.*;
 
-import static org.cats.core.UI.*;
-
 public class GetIP {
-    protected static void getIP() {
-        String address = getAddress().getHostAddress();
+    protected void getIP(JTextField ipField, JLabel ip, JLabel location, UI ui, GetLocation getLocation, JFrame frame, JComboBox<String> domainList) {
+
+        String address = ui.getAddress().getHostAddress();
         String displayAddress;
 
         switch (address) {
@@ -18,11 +17,11 @@ public class GetIP {
         }
 
         ip.setText("Айпи: " + displayAddress);
-        location.setText("Локация: " + GetLocation.getLocation());
+        location.setText(getLocation.getLocation(frame, ipField, ip, ui));
 
         try {
             String ipText = ipField.getText().trim();
-            SetRecent.setRecent(ipText);
+            SetRecent.setRecent(ipText, domainList);
         } catch (Exception g) {
             JOptionPane.showMessageDialog(frame, g.getMessage());
         }

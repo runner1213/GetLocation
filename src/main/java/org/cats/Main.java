@@ -10,7 +10,8 @@ public class Main {
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
-        UI.createComponents();
+        UI ui = new UI();
+        ui.createComponents();
     }
     public static void main(String[] args) {
         SwingUtilities.invokeLater(Main::new);
